@@ -1,0 +1,1897 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     78490,       1889]
+NotebookOptionsPosition[     71691,       1743]
+NotebookOutlinePosition[     72034,       1758]
+CellTagsIndexPosition[     71991,       1755]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["@Haosen He 2020 ", "Item",
+ CellChangeTimes->{{3.791300468387925*^9, 3.7913006067344046`*^9}, {
+  3.791300681207511*^9, 3.791300719468862*^9}, {3.791300873044589*^9, 
+  3.7913008734686127`*^9}, {3.798210451496682*^9, 
+  3.7982104683970327`*^9}},ExpressionUUID->"335dce2f-32e7-4c46-83e8-\
+273076e47c4f"],
+
+Cell["\<\
+This program solves the equilibria of perfect competitive market, simple \
+monopoly, n-firm Cournot and 2-firm Stakelburg given the total cost function \
+and Inverse demand function.\
+\>", "Item",
+ CellChangeTimes->{{3.791300468387925*^9, 3.7913006067344046`*^9}, {
+  3.791300681207511*^9, 3.791300719468862*^9}, {3.791300873044589*^9, 
+  3.7913008734686127`*^9}},ExpressionUUID->"4395fb52-54cb-46f2-a258-\
+8642fea20c24"],
+
+Cell["Assumes Linear demand and linear cost ", "Item",
+ CellChangeTimes->{{3.791300468387925*^9, 3.7913006067344046`*^9}, {
+   3.791300681207511*^9, 3.791300718359818*^9}, 3.7913301940957828`*^9, {
+   3.7913329559884443`*^9, 3.7913329826186867`*^9}, {3.791334127955718*^9, 
+   3.7913341350148373`*^9}, 3.791334532636081*^9, {3.791565573311881*^9, 
+   3.791565596885499*^9}, {3.7982098418036027`*^9, 3.7982098809856205`*^9}, {
+   3.7982103961917715`*^9, 
+   3.7982104144121284`*^9}},ExpressionUUID->"5dc3964c-a765-4c18-9715-\
+bfe4a571283b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"P", "[", "Q_", "]"}], "=", " ", 
+     RowBox[{"a", "-", 
+      RowBox[{"b", "*", "Q"}]}]}], ";"}], "  ", 
+   RowBox[{"(*", 
+    RowBox[{"inverse", " ", "demand"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"TC", "[", "Q_", "]"}], " ", "=", 
+     RowBox[{"c", "*", "Q"}]}], ";", " ", 
+    RowBox[{"(*", 
+     RowBox[{"total", " ", "cost"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"MR", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"P", "[", "Q", "]"}], "*", "Q"}], ",", "Q"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"MC", "=", "c"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qpc", "=", 
+     RowBox[{"Q", "/.", 
+      RowBox[{
+       RowBox[{"Solve", "[", 
+        RowBox[{
+         RowBox[{"MC", "==", 
+          RowBox[{"P", "[", "Q", "]"}]}], ",", "Q"}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Ppc", "=", " ", 
+     RowBox[{"P", "[", "Qpc", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qmo", "=", 
+     RowBox[{"Solve", "[", 
+      RowBox[{
+       RowBox[{"MR", "==", "MC"}], ",", " ", "Q"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qmo", "=", 
+     RowBox[{"Q", "/.", 
+      RowBox[{"Qmo", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Pmo", "=", 
+     RowBox[{"P", "[", "Qmo", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PMarmo", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"Pmo", "-", "MC"}], ")"}], "/", "Pmo"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Firms", "[", 
+      RowBox[{"n_", ",", "Q_"}], "]"}], "=", 
+     RowBox[{"n", "+", "Q"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"P", "[", 
+     RowBox[{"Firms", "[", 
+      RowBox[{"n", ",", "Q"}], "]"}], "]"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BB1", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"P", "[", 
+         RowBox[{"Firms", "[", 
+          RowBox[{"n", ",", "Q"}], "]"}], "]"}], "*", "Q"}], ",", "Q"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BR1", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"Q", "/.", 
+        RowBox[{"Solve", "[", 
+         RowBox[{"MC", "\[Equal]", "BB1"}], "]"}]}], ")"}], "/.", 
+      RowBox[{"n", "\[Rule]", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"n", "-", "1"}], ")"}], "*", "Q"}], ")"}]}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Qcour", "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"Q", "/.", 
+        RowBox[{"Solve", "[", 
+         RowBox[{
+          RowBox[{"Q", "\[Equal]", "BR1"}], ",", "Q"}], "]"}]}], ")"}], "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "*", "n"}]}], "\[IndentingNewLine]", 
+   RowBox[{"(", 
+    RowBox[{"Q", "/.", 
+     RowBox[{"Solve", "[", 
+      RowBox[{
+       RowBox[{"Q", "\[Equal]", "BR1"}], ",", "Q"}], "]"}]}], ")"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Pcour", "=", 
+     RowBox[{"P", "[", "Qcour", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"PMarco", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"Pcour", "-", "MC"}], ")"}], "/", "Pcour"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BB2", "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"P", "[", 
+         RowBox[{"Firms", "[", 
+          RowBox[{"O", ",", "Q"}], "]"}], "]"}], "*", "Q"}], ",", "Q"}], 
+      "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"BR2", "=", 
+     RowBox[{"Q", "/.", 
+      RowBox[{
+       RowBox[{"Solve", "[", 
+        RowBox[{"MC", "\[Equal]", "BB2"}], "]"}], "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qfirst", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"O", "/.", 
+        RowBox[{"Solve", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"D", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"P", "[", 
+               RowBox[{"BR2", "+", "O"}], "]"}], "*", "O"}], ",", "O"}], 
+            "]"}], "\[Equal]", 
+           RowBox[{"(", 
+            RowBox[{"MC", "/.", 
+             RowBox[{"Q", "\[Rule]", "O"}]}], ")"}]}], ",", "O"}], "]"}]}], 
+       ")"}], "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qsecond", "=", 
+     RowBox[{"BR2", "/.", 
+      RowBox[{"O", "\[Rule]", "Qfirst"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Qstac", "=", 
+     RowBox[{"Qfirst", "+", "Qsecond"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Pstac", "=", 
+     RowBox[{"P", "[", "Qstac", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+    "\"\<2-firm Stackelburg Quantity: \>\"", ",", "Qstac", ",", 
+     "\"\< , Total Price: \>\"", ",", " ", "Pstac", ",", 
+     "\"\< , Leader's Quantity: \>\"", ",", "Qfirst", ",", 
+     "\"\< , Follower's Quantity: \>\"", ",", "Qsecond", ",", " ", 
+     "\"\<\\n\>\""}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+    "\"\<N-firm cournot Quantity: \>\"", ",", "Qcour", ",", 
+     "\"\< , Price: \>\"", ",", " ", "Pcour", ",", 
+     "\"\< , Profit Margin: \>\"", ",", "PMarco", ",", "\"\<\\n\>\""}], "]"}],
+    "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+    "\"\<Monopoly Quantity: \>\"", ",", "Qmo", ",", "\"\< , Price: \>\"", ",",
+      " ", "Pmo", ",", "\"\< , Profit Margin: \>\"", ",", "PMarmo", ",", 
+     "\"\<\\n\>\""}], "]"}], "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{
+    "\"\<Perfect Competition Quantity: \>\"", ",", "Qpc", ",", 
+     "\"\< , Price: \>\"", ",", " ", "Ppc", ",", "\"\<\\n\>\""}], "]"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Print", "[", 
+    RowBox[{"\"\<\\n\>\"", ",", "\"\<Results\>\"", ",", "\"\<\\n\>\""}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.791300725057021*^9, 3.7913007345045853`*^9}, {
+   3.791300764547475*^9, 3.7913008168271136`*^9}, {3.791300854449251*^9, 
+   3.7913008897297525`*^9}, {3.791326961387495*^9, 3.7913271042380424`*^9}, 
+   3.791327139595929*^9, {3.791327383805848*^9, 3.791327546067181*^9}, {
+   3.7913276147490234`*^9, 3.791327637235422*^9}, {3.791327830193308*^9, 
+   3.791327845529316*^9}, {3.7913279812776175`*^9, 3.79132798234017*^9}, {
+   3.791328098099805*^9, 3.791328192403618*^9}, {3.791328224035134*^9, 
+   3.791328373819995*^9}, {3.791328427466113*^9, 3.791328473965666*^9}, {
+   3.791328508338225*^9, 3.791328549951335*^9}, {3.7913285872658014`*^9, 
+   3.791328587725211*^9}, 3.791329152428689*^9, {3.7913293138962717`*^9, 
+   3.7913293374548874`*^9}, {3.7913293783873796`*^9, 
+   3.7913296083740425`*^9}, {3.7913296735464153`*^9, 
+   3.7913298306410065`*^9}, {3.7913300981490884`*^9, 
+   3.7913301850339713`*^9}, {3.7913319637287083`*^9, 3.791332293975316*^9}, {
+   3.791332348959877*^9, 3.791332632134525*^9}, {3.791332679955186*^9, 
+   3.791332926655716*^9}, {3.7913329877112474`*^9, 3.7913334124115973`*^9}, {
+   3.7913334468901625`*^9, 3.7913334567598457`*^9}, {3.7913335852043805`*^9, 
+   3.7913336789687243`*^9}, {3.791333722273058*^9, 3.7913339516892834`*^9}, {
+   3.7913340016743135`*^9, 3.7913340093283587`*^9}, {3.791334042560388*^9, 
+   3.7913341055609994`*^9}, {3.791334624308467*^9, 3.7913346787228007`*^9}, {
+   3.7913347615725193`*^9, 3.7913348089028463`*^9}, {3.791334857596553*^9, 
+   3.7913348594555635`*^9}, 3.791565287999997*^9, {3.7915653687341747`*^9, 
+   3.7915653753878503`*^9}, {3.791565415148325*^9, 3.7915654361386933`*^9}, {
+   3.7916021398302865`*^9, 3.7916021740794744`*^9}, {3.791602239074102*^9, 
+   3.7916022949426813`*^9}, {3.791602372372254*^9, 3.791602375092622*^9}, {
+   3.798209923088414*^9, 3.798209985523929*^9}, {3.7982100190310287`*^9, 
+   3.7982100430219393`*^9}, {3.7982104020438695`*^9, 
+   3.7982104029905214`*^9}},ExpressionUUID->"6847a263-73ff-4900-ad52-\
+f4e54a4b6eae"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022959440947`*^9, 
+  3.791602327110339*^9},ExpressionUUID->"342b109e-8245-4f4b-b1b1-\
+e6a14cf62969"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022959440947`*^9, 
+  3.7916023271143265`*^9},ExpressionUUID->"82fb8425-9b47-4632-81ce-\
+e688fa3cbda4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022959440947`*^9, 
+  3.7916023271183205`*^9},ExpressionUUID->"39d4cc6e-1038-450e-bafa-\
+7418c519969f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022959440947`*^9, 
+  3.791602327122316*^9},ExpressionUUID->"d21fa933-5bfb-40c1-bf08-\
+5b85e1e9d0a8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022959440947`*^9, 
+  3.7916023271263437`*^9},ExpressionUUID->"e75cc681-2ba3-4429-8d2b-\
+9b22fc435f1b"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"n", " ", "Q"}]], "Output",
+ CellChangeTimes->{
+  3.791602240030805*^9, {3.7916022700504885`*^9, 3.791602327098347*^9}, 
+   3.79160238271568*^9},ExpressionUUID->"2b019980-b54a-4324-a727-\
+502a4e943555"],
+
+Cell[BoxData[
+ RowBox[{"{", "Q", "}"}]], "Output",
+ CellChangeTimes->{
+  3.791602240030805*^9, {3.7916022700504885`*^9, 3.791602327098347*^9}, 
+   3.7916023827236834`*^9},ExpressionUUID->"4c92feb4-33a8-44a5-a787-\
+a96a5820ea44"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022700584784`*^9, 3.7916023136783237`*^9, 
+  3.791602382727663*^9},ExpressionUUID->"0f0d1676-8bca-42d9-860e-\
+ae598449968a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022700584784`*^9, 3.7916023136783237`*^9, 
+  3.791602382731697*^9},ExpressionUUID->"86b8d54b-f7e7-4c23-8942-\
+f5a052c5a07a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022700584784`*^9, 3.7916023136783237`*^9, 
+  3.791602382735695*^9},ExpressionUUID->"8eff6bc5-3240-4296-b21a-\
+0f20b32a9445"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022700584784`*^9, 3.7916023136783237`*^9, 
+  3.7916023827396555`*^9},ExpressionUUID->"1fe15d2c-b6de-4715-adbf-\
+a556393d1415"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.7916022700584784`*^9, 3.7916023136783237`*^9, 
+  3.791602382743682*^9},ExpressionUUID->"53caaf04-5ac3-41a3-accd-\
+4c0b4f4f8c5a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 3.791602174614668*^9}, 
+   3.791602240054558*^9},ExpressionUUID->"33318fe4-6d1b-4199-9f0a-\
+84ff5edbca09"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 3.791602174614668*^9}, 
+   3.7916022400505266`*^9},ExpressionUUID->"107c763d-caad-4016-83df-\
+5f89fb9ef949"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 3.791602174614668*^9}, 
+   3.7916022400465307`*^9},ExpressionUUID->"c9612692-9897-4b8a-b411-\
+f6d7f470448d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 3.791602174614668*^9}, 
+   3.7916022400425687`*^9},ExpressionUUID->"aa665efc-a4c9-491b-8e55-\
+34c442d3b03d"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 3.791602174614668*^9}, 
+   3.791602240038542*^9},ExpressionUUID->"56f7cdfb-12a8-48d7-aba9-\
+5a8ad1814c0a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 
+   3.791602174614668*^9}},ExpressionUUID->"1494d111-5677-49b6-bf3e-\
+6f4275d66401"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 
+   3.791602174610623*^9}},ExpressionUUID->"dab3470b-2fae-4852-b814-\
+94bddd215549"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 
+   3.7916021746066284`*^9}},ExpressionUUID->"ec76b9bb-a6ce-4b1e-b405-\
+e544e018faf7"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 
+   3.7916021745986395`*^9}},ExpressionUUID->"3edbc743-1320-4a72-a6fd-\
+d4b2c309c943"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, {
+   3.7916021462869887`*^9, 
+   3.7916021745948195`*^9}},ExpressionUUID->"6b7cbc4d-7ef6-414c-b8b1-\
+81d8dcc72474"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, 
+   3.7916021462869887`*^9},ExpressionUUID->"12af776d-4720-4006-96dd-\
+47a00320da06"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, 
+   3.7916021462869887`*^9},ExpressionUUID->"8a4758aa-b519-4c1b-ba82-\
+d6af8777b230"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, 
+   3.7916021462829447`*^9},ExpressionUUID->"8da17915-08c6-4835-8986-\
+f99bfe9fc135"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, 
+   3.7916021462789583`*^9},ExpressionUUID->"59f8e24a-5b35-4a3b-abb4-\
+7fcc136f73a4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 3.791565437098767*^9, 
+   3.791602146270996*^9},ExpressionUUID->"2dffcd46-4139-4685-98be-\
+f0a203898c40"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 
+   3.791565437098767*^9},ExpressionUUID->"f3a37012-4b60-44f1-ba23-\
+5ddccd644280"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", "60",
+    "\[InvisibleSpace]", "\<\" , Price: \"\>", "\[InvisibleSpace]", "20", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["Perfect Competition Quantity: ", 60, " , Price: ", 20, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 
+   3.791565437094768*^9},ExpressionUUID->"8173b82b-c5c2-49b7-b0c3-\
+3130df38469b"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", "30", 
+   "\[InvisibleSpace]", "\<\" , Price: \"\>", "\[InvisibleSpace]", "80", 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox["3", "4"], "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 30, " , Price: ", 80, " , Profit Margin: ", 
+   Rational[3, 4], "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 
+   3.791565437094768*^9},ExpressionUUID->"772d7aea-cf63-48fc-bdc0-\
+97b1e3433f03"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"60", " ", "n"}], 
+    RowBox[{"1", "+", "n"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"140", "-", 
+    FractionBox[
+     RowBox[{"120", " ", "n"}], 
+     RowBox[{"1", "+", "n"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"120", "-", 
+     FractionBox[
+      RowBox[{"120", " ", "n"}], 
+      RowBox[{"1", "+", "n"}]]}], 
+    RowBox[{"140", "-", 
+     FractionBox[
+      RowBox[{"120", " ", "n"}], 
+      RowBox[{"1", "+", "n"}]]}]], "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", 60 $CellContext`n/(1 + $CellContext`n), 
+   " , Price: ", 140 - 120 $CellContext`n/(1 + $CellContext`n), 
+   " , Profit Margin: ", (120 - 120 $CellContext`n/(1 + $CellContext`n))/(140 - 
+   120 $CellContext`n/(1 + $CellContext`n)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 
+   3.791565437090806*^9},ExpressionUUID->"f93a38b1-c5b6-47bc-b22c-\
+8d57e557c72a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", "45", 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", "50",
+    "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", 
+   "\[InvisibleSpace]", "30", 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "15", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", 45, " , Total Price: ", 50, 
+   " , Leader's Quantity: ", 30, " , Follower's Quantity: ", 15, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 3.791565376945262*^9, 
+   3.791565437086811*^9},ExpressionUUID->"aed1a51e-e668-49f6-ae69-\
+1bede0bcf343"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 
+   3.791565376945262*^9},ExpressionUUID->"2b1398f0-5cbd-47a4-931e-\
+c301fc30e449"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], "b"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "c", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`b^(-1) ($CellContext`a - \
+$CellContext`c), " , Price: ", $CellContext`c, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 
+   3.791565376945262*^9},ExpressionUUID->"7d8f6289-3a85-4148-a487-\
+6c819d680491"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c"}], 
+    RowBox[{"2", " ", "b"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}], 
+    RowBox[{"a", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", "c"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c), 
+   " , Price: ", $CellContext`a + 
+   Rational[1, 2] (-$CellContext`a + $CellContext`c), 
+   " , Profit Margin: ", ($CellContext`a + 
+     Rational[1, 
+        2] (-$CellContext`a + $CellContext`c))^(-1) ($CellContext`a - \
+$CellContext`c + Rational[1, 2] (-$CellContext`a + $CellContext`c)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 
+   3.791565376929681*^9},ExpressionUUID->"5be1ffa6-a815-4027-84e8-\
+35d58f7f0213"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}], 
+    RowBox[{"a", "-", 
+     RowBox[{"b", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`a - $CellContext`b $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 
+   3.791565376929681*^9},ExpressionUUID->"c9872cc3-ebf8-4d44-9877-\
+599aeb59d1c2"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"a", "-", "c", "-", 
+      RowBox[{"b", " ", "Q"}]}], 
+     RowBox[{"2", " ", "b"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"a", "-", 
+    RowBox[{"b", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"a", "-", "c", "-", 
+         RowBox[{"b", " ", "Q"}]}], 
+        RowBox[{"2", " ", "b"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"a", "-", "c", "-", 
+     RowBox[{"b", " ", "Q"}]}], 
+    RowBox[{"2", " ", "b"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q), 
+   " , Total Price: ", $CellContext`a - $CellContext`b ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - \
+$CellContext`b $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`b^(-1) ($CellContext`a - $CellContext`c - $CellContext`b \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9, 
+   3.791565376914048*^9},ExpressionUUID->"f7a2f6e7-f3ad-4113-ae70-\
+fb2fecceff8e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\n\"\>", "\[InvisibleSpace]", "\<\"Results\"\>", 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm["\n", "Results", "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9},ExpressionUUID->"ce5ee214-28fc-45c0-a1d0-\
+629fec541f6e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Perfect Competition Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"A", "-", "M"}], "B"], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", "M", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Perfect Competition Quantity: ", $CellContext`B^(-1) ($CellContext`A - \
+$CellContext`M), " , Price: ", $CellContext`M, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890735703`*^9},ExpressionUUID->"3d3795f4-fb59-42f6-a274-\
+ae86e6e272d8"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Monopoly Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"A", "-", "M"}], 
+    RowBox[{"2", " ", "B"}]], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"A", "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "A"}], "+", "M"}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"A", "-", "M", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "A"}], "+", "M"}], ")"}]}]}], 
+    RowBox[{"A", "+", 
+     RowBox[{
+      FractionBox["1", "2"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", "A"}], "+", "M"}], ")"}]}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "Monopoly Quantity: ", 
+   Rational[1, 2] $CellContext`B^(-1) ($CellContext`A - $CellContext`M), 
+   " , Price: ", $CellContext`A + 
+   Rational[1, 2] (-$CellContext`A + $CellContext`M), 
+   " , Profit Margin: ", ($CellContext`A + 
+     Rational[1, 
+        2] (-$CellContext`A + $CellContext`M))^(-1) ($CellContext`A - \
+$CellContext`M + Rational[1, 2] (-$CellContext`A + $CellContext`M)), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.7915652890655804`*^9},ExpressionUUID->"d0ca7be3-5d1b-45b0-b4dd-\
+10228a6ce83f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"N-firm cournot Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"n", " ", "Q"}], "\[InvisibleSpace]", "\<\" , Price: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"A", "-", 
+    RowBox[{"B", " ", "n", " ", "Q"}]}], 
+   "\[InvisibleSpace]", "\<\" , Profit Margin: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"A", "-", "M", "-", 
+     RowBox[{"B", " ", "n", " ", "Q"}]}], 
+    RowBox[{"A", "-", 
+     RowBox[{"B", " ", "n", " ", "Q"}]}]], 
+   "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "N-firm cournot Quantity: ", $CellContext`n $CellContext`Q, 
+   " , Price: ", $CellContext`A - $CellContext`B $CellContext`n \
+$CellContext`Q, 
+   " , Profit Margin: ", ($CellContext`A - $CellContext`B $CellContext`n \
+$CellContext`Q)^(-1) ($CellContext`A - $CellContext`M - $CellContext`B \
+$CellContext`n $CellContext`Q), "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.79156528906157*^9},ExpressionUUID->"74117bcf-1afa-4528-a260-\
+f393430557f1"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"2-firm Stackelburg Quantity: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Q", "+", 
+    FractionBox[
+     RowBox[{"A", "-", "M", "-", 
+      RowBox[{"B", " ", "Q"}]}], 
+     RowBox[{"2", " ", "B"}]]}], 
+   "\[InvisibleSpace]", "\<\" , Total Price: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"A", "-", 
+    RowBox[{"B", " ", 
+     RowBox[{"(", 
+      RowBox[{"Q", "+", 
+       FractionBox[
+        RowBox[{"A", "-", "M", "-", 
+         RowBox[{"B", " ", "Q"}]}], 
+        RowBox[{"2", " ", "B"}]]}], ")"}]}]}], 
+   "\[InvisibleSpace]", "\<\" , Leader's Quantity: \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"A", "-", "M", "-", 
+     RowBox[{"B", " ", "Q"}]}], 
+    RowBox[{"2", " ", "B"}]], 
+   "\[InvisibleSpace]", "\<\" , Follower's Quantity: \"\>", 
+   "\[InvisibleSpace]", "Q", "\[InvisibleSpace]", "\<\"\\n\"\>"}],
+  SequenceForm[
+  "2-firm Stackelburg Quantity: ", $CellContext`Q + 
+   Rational[1, 
+      2] $CellContext`B^(-1) ($CellContext`A - $CellContext`M - \
+$CellContext`B $CellContext`Q), 
+   " , Total Price: ", $CellContext`A - $CellContext`B ($CellContext`Q + 
+    Rational[1, 
+       2] $CellContext`B^(-1) ($CellContext`A - $CellContext`M - \
+$CellContext`B $CellContext`Q)), " , Leader's Quantity: ", 
+   Rational[1, 
+     2] $CellContext`B^(-1) ($CellContext`A - $CellContext`M - $CellContext`B \
+$CellContext`Q), " , Follower's Quantity: ", $CellContext`Q, "\n"],
+  Editable->False]], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.79156528905357*^9},ExpressionUUID->"31c0ca73-10e0-4473-9da7-\
+133b0fb4580e"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871848409*^9}, 
+   3.791565537110735*^9},ExpressionUUID->"37161b0b-97c2-48a6-a795-\
+9dcae16c9490"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871832802*^9}, 
+   3.7915655346760445`*^9},ExpressionUUID->"48fb9103-554e-4775-9039-\
+b096fc3e734d"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871832802*^9}, 
+   3.791565531685961*^9},ExpressionUUID->"47e66b42-f625-4635-8201-\
+52c275e22b49"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.791334871832802*^9}, {
+   3.791565525247475*^9, 
+   3.7915655293742404`*^9}},ExpressionUUID->"583188e6-c797-4252-a1f4-\
+df0eb1dcbb7f"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 3.7913348718171678`*^9}, 
+   3.791565523550846*^9},ExpressionUUID->"5b73850e-8f3b-4346-80e2-\
+a7069b96353e"],
+
+Cell[BoxData["\[LineSeparator]"], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, {3.7913348525283546`*^9, 
+   3.791334853457535*^9}},ExpressionUUID->"9d416c3d-4af5-4e74-a114-\
+ff3d0a5438cb"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348113593397`*^9, 
+   3.7913348430194683`*^9},ExpressionUUID->"05434165-3dc6-47d1-aa3e-\
+a212716d5952"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, {
+   3.7913348113593397`*^9, 
+   3.7913348408608875`*^9}},ExpressionUUID->"2823b2a8-9c60-4a7e-b6a7-\
+d2a8c157b95e"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, {
+   3.7913348113593397`*^9, 
+   3.7913348388143597`*^9}},ExpressionUUID->"b69500ac-7a26-44d5-9d1b-\
+5b11ba3829f2"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, {
+   3.791334811343749*^9, 
+   3.7913348362663403`*^9}},ExpressionUUID->"a5244545-85f1-4989-ab69-\
+7bd03d668695"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.791334832586979*^9},ExpressionUUID->"d60f78be-c083-4ff4-9f13-\
+0eab0528f849"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 3.791334518117112*^9}, 3.7913347748898306`*^9, 
+   3.7913348161281724`*^9},ExpressionUUID->"b77495ec-3e59-4717-99d6-\
+2ab44c864f85"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 
+   3.791334518117112*^9}},ExpressionUUID->"c2e11327-c2f3-41b9-b1d6-\
+1e810b1b68cf"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 
+   3.7913345207831125`*^9}},ExpressionUUID->"6691c691-678c-4e4d-a6dd-\
+ac644c126567"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 
+   3.7913345230801272`*^9}},ExpressionUUID->"14155e8f-5303-4d3a-99f2-\
+0f7cd418a40f"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 
+   3.7913345255035734`*^9}},ExpressionUUID->"f9effb45-fc8c-42dd-a408-\
+f95c0408cc45"],
+
+Cell[BoxData[""], "Print",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.7913337048664246`*^9, 3.7913337445100455`*^9, {3.7913338217017612`*^9, 
+   3.791333844697792*^9}, {3.791333876794594*^9, 3.7913339569252787`*^9}, 
+   3.7913340100374155`*^9, {3.7913340540354724`*^9, 3.791334107003434*^9}, {
+   3.791334494490374*^9, 
+   3.791334507277742*^9}},ExpressionUUID->"965b67ea-0be3-4929-ab24-\
+12723d8c6b41"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1264, 637},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.1 for Microsoft Windows (64-bit) (April 18, 2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 308, 5, 29, "Item", "ExpressionUUID" -> \
+"335dce2f-32e7-4c46-83e8-273076e47c4f"],
+Cell[891, 29, 431, 8, 29, "Item", "ExpressionUUID" -> \
+"4395fb52-54cb-46f2-a258-8642fea20c24"],
+Cell[1325, 39, 539, 8, 29, "Item", "ExpressionUUID" -> \
+"5dc3964c-a765-4c18-9715-bfe4a571283b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1901, 52, 8294, 212, 658, "Input", "ExpressionUUID" -> \
+"6847a263-73ff-4900-ad52-f4e54a4b6eae"],
+Cell[CellGroupData[{
+Cell[10220, 268, 1595, 39, 68, "Print", "ExpressionUUID" -> \
+"342b109e-8245-4f4b-b1b1-e6a14cf62969"],
+Cell[11818, 309, 1046, 24, 69, "Print", "ExpressionUUID" -> \
+"82fb8425-9b47-4632-81ce-e688fa3cbda4"],
+Cell[12867, 335, 1433, 40, 95, "Print", "ExpressionUUID" -> \
+"39d4cc6e-1038-450e-bafa-7418c519969f"],
+Cell[14303, 377, 571, 12, 64, "Print", "ExpressionUUID" -> \
+"d21fa933-5bfb-40c1-bf08-5b85e1e9d0a8"],
+Cell[14877, 391, 337, 8, 59, "Print", "ExpressionUUID" -> \
+"e75cc681-2ba3-4429-8d2b-9b22fc435f1b"]
+}, Open  ]],
+Cell[15229, 402, 225, 5, 30, "Output", "ExpressionUUID" -> \
+"2b019980-b54a-4324-a727-502a4e943555"],
+Cell[15457, 409, 228, 5, 30, "Output", "ExpressionUUID" -> \
+"4c92feb4-33a8-44a5-a787-a96a5820ea44"],
+Cell[CellGroupData[{
+Cell[15710, 418, 1619, 39, 68, "Print", "ExpressionUUID" -> \
+"0f0d1676-8bca-42d9-860e-ae598449968a"],
+Cell[17332, 459, 1068, 24, 69, "Print", "ExpressionUUID" -> \
+"86b8d54b-f7e7-4c23-8942-f5a052c5a07a"],
+Cell[18403, 485, 1455, 40, 95, "Print", "ExpressionUUID" -> \
+"8eff6bc5-3240-4296-b21a-0f20b32a9445"],
+Cell[19861, 527, 597, 12, 64, "Print", "ExpressionUUID" -> \
+"1fe15d2c-b6de-4715-adbf-a556393d1415"],
+Cell[20461, 541, 359, 8, 59, "Print", "ExpressionUUID" -> \
+"53caaf04-5ac3-41a3-accd-4c0b4f4f8c5a"],
+Cell[20823, 551, 863, 17, 59, "Print", "ExpressionUUID" -> \
+"33318fe4-6d1b-4199-9f0a-84ff5edbca09"],
+Cell[21689, 570, 1101, 21, 64, "Print", "ExpressionUUID" -> \
+"107c763d-caad-4016-83df-5f89fb9ef949"],
+Cell[22793, 593, 1961, 49, 95, "Print", "ExpressionUUID" -> \
+"c9612692-9897-4b8a-b411-f6d7f470448d"],
+Cell[24757, 644, 1574, 33, 69, "Print", "ExpressionUUID" -> \
+"aa665efc-a4c9-491b-8e55-34c442d3b03d"],
+Cell[26334, 679, 2123, 48, 68, "Print", "ExpressionUUID" -> \
+"56f7cdfb-12a8-48d7-aba9-5a8ad1814c0a"],
+Cell[28460, 729, 841, 17, 59, "Print", "ExpressionUUID" -> \
+"1494d111-5677-49b6-bf3e-6f4275d66401"],
+Cell[29304, 748, 1077, 21, 64, "Print", "ExpressionUUID" -> \
+"dab3470b-2fae-4852-b814-94bddd215549"],
+Cell[30384, 771, 1939, 49, 95, "Print", "ExpressionUUID" -> \
+"ec76b9bb-a6ce-4b1e-b405-e544e018faf7"],
+Cell[32326, 822, 1552, 33, 69, "Print", "ExpressionUUID" -> \
+"3edbc743-1320-4a72-a6fd-d4b2c309c943"],
+Cell[33881, 857, 2103, 48, 68, "Print", "ExpressionUUID" -> \
+"6b7cbc4d-7ef6-414c-b8b1-81d8dcc72474"],
+Cell[35987, 907, 813, 16, 59, "Print", "ExpressionUUID" -> \
+"12af776d-4720-4006-96dd-47a00320da06"],
+Cell[36803, 925, 1049, 20, 64, "Print", "ExpressionUUID" -> \
+"8a4758aa-b519-4c1b-ba82-d6af8777b230"],
+Cell[37855, 947, 1909, 48, 95, "Print", "ExpressionUUID" -> \
+"8da17915-08c6-4835-8986-f99bfe9fc135"],
+Cell[39767, 997, 1522, 32, 69, "Print", "ExpressionUUID" -> \
+"59f8e24a-5b35-4a3b-abb4-7fcc136f73a4"],
+Cell[41292, 1031, 2071, 47, 68, "Print", "ExpressionUUID" -> \
+"2dffcd46-4139-4685-98be-f0a203898c40"],
+Cell[43366, 1080, 789, 16, 59, "Print", "ExpressionUUID" -> \
+"f3a37012-4b60-44f1-ba23-5ddccd644280"],
+Cell[44158, 1098, 916, 17, 41, "Print", "ExpressionUUID" -> \
+"8173b82b-c5c2-49b7-b0c3-3130df38469b"],
+Cell[45077, 1117, 1038, 20, 67, "Print", "ExpressionUUID" -> \
+"772d7aea-cf63-48fc-bdc0-97b1e3433f03"],
+Cell[46118, 1139, 1606, 37, 95, "Print", "ExpressionUUID" -> \
+"f93a38b1-c5b6-47bc-b22c-8d57e557c72a"],
+Cell[47727, 1178, 1173, 22, 41, "Print", "ExpressionUUID" -> \
+"aed1a51e-e668-49f6-ae69-1bede0bcf343"],
+Cell[48903, 1202, 767, 16, 59, "Print", "ExpressionUUID" -> \
+"2b1398f0-5cbd-47a4-931e-c301fc30e449"],
+Cell[49673, 1220, 1003, 20, 64, "Print", "ExpressionUUID" -> \
+"7d8f6289-3a85-4148-a487-6c819d680491"],
+Cell[50679, 1242, 1863, 48, 95, "Print", "ExpressionUUID" -> \
+"5be1ffa6-a815-4027-84e8-35d58f7f0213"],
+Cell[52545, 1292, 1476, 32, 69, "Print", "ExpressionUUID" -> \
+"c9872cc3-ebf8-4d44-9877-599aeb59d1c2"],
+Cell[54024, 1326, 2027, 47, 68, "Print", "ExpressionUUID" -> \
+"f7a2f6e7-f3ad-4113-ae70-fb2fecceff8e"],
+Cell[56054, 1375, 741, 15, 59, "Print", "ExpressionUUID" -> \
+"ce5ee214-28fc-45c0-a1d0-629fec541f6e"],
+Cell[56798, 1392, 977, 19, 67, "Print", "ExpressionUUID" -> \
+"3d3795f4-fb59-42f6-a274-ae86e6e272d8"],
+Cell[57778, 1413, 1837, 47, 95, "Print", "ExpressionUUID" -> \
+"d0ca7be3-5d1b-45b0-b4dd-10228a6ce83f"],
+Cell[59618, 1462, 1447, 31, 69, "Print", "ExpressionUUID" -> \
+"74117bcf-1afa-4528-a260-f393430557f1"],
+Cell[61068, 1495, 1998, 46, 68, "Print", "ExpressionUUID" -> \
+"31c0ca73-10e0-4473-9da7-133b0fb4580e"],
+Cell[63069, 1543, 556, 10, 22, "Print", "ExpressionUUID" -> \
+"37161b0b-97c2-48a6-a795-9dcae16c9490"],
+Cell[63628, 1555, 558, 10, 22, "Print", "ExpressionUUID" -> \
+"48fb9103-554e-4775-9039-b096fc3e734d"],
+Cell[64189, 1567, 556, 10, 22, "Print", "ExpressionUUID" -> \
+"47e66b42-f625-4635-8201-52c275e22b49"],
+Cell[64748, 1579, 586, 11, 22, "Print", "ExpressionUUID" -> \
+"583188e6-c797-4252-a1f4-df0eb1dcbb7f"],
+Cell[65337, 1592, 558, 10, 22, "Print", "ExpressionUUID" -> \
+"5b73850e-8f3b-4346-80e2-a7069b96353e"],
+Cell[65898, 1604, 550, 10, 41, "Print", "ExpressionUUID" -> \
+"9d416c3d-4af5-4e74-a114-ff3d0a5438cb"],
+Cell[66451, 1616, 510, 10, 22, "Print", "ExpressionUUID" -> \
+"05434165-3dc6-47d1-aa3e-a212716d5952"],
+Cell[66964, 1628, 512, 10, 22, "Print", "ExpressionUUID" -> \
+"2823b2a8-9c60-4a7e-b6a7-d2a8c157b95e"],
+Cell[67479, 1640, 512, 10, 22, "Print", "ExpressionUUID" -> \
+"b69500ac-7a26-44d5-9d1b-5b11ba3829f2"],
+Cell[67994, 1652, 510, 10, 22, "Print", "ExpressionUUID" -> \
+"a5244545-85f1-4989-ab69-7bd03d668695"],
+Cell[68507, 1664, 480, 9, 22, "Print", "ExpressionUUID" -> \
+"d60f78be-c083-4ff4-9f13-0eab0528f849"],
+Cell[68990, 1675, 482, 9, 22, "Print", "ExpressionUUID" -> \
+"b77495ec-3e59-4717-99d6-2ab44c864f85"],
+Cell[69475, 1686, 434, 9, 22, "Print", "ExpressionUUID" -> \
+"c2e11327-c2f3-41b9-b1d6-1e810b1b68cf"],
+Cell[69912, 1697, 436, 9, 22, "Print", "ExpressionUUID" -> \
+"6691c691-678c-4e4d-a6dd-ac644c126567"],
+Cell[70351, 1708, 436, 9, 22, "Print", "ExpressionUUID" -> \
+"14155e8f-5303-4d3a-99f2-0f7cd418a40f"],
+Cell[70790, 1719, 436, 9, 22, "Print", "ExpressionUUID" -> \
+"f9effb45-fc8c-42dd-a408-f95c0408cc45"],
+Cell[71229, 1730, 434, 9, 22, "Print", "ExpressionUUID" -> \
+"965b67ea-0be3-4929-ab24-12723d8c6b41"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
